@@ -5,6 +5,7 @@
 
 Robert Turenne
 * 22-8-22 Version 1.0
+* 22-9-2 Version 1.1
 */
 // Charger les librairires requises
 #include <Servo.h>              // Gestion des servo-moteurs
@@ -17,13 +18,14 @@ LiquidCrystal_I2C mylcd(0x27, 16, 2);  //definir l'instance I2C
 Servo servoPorte;    //porte
 Servo servoFenetre;  //Fenêtre
 
-int bouton1Val;    //set variable bouton1Val
-int bouton2Val;
-int btn2_num;      //set variable btn2_num
-int boutton1;      //set variable o
-int boutonDroiteEtat;       //set variable boutonDroiteEtat
-String fans_char;  //string type variable fans_char
-int fans_val;      //set variable fans_char
+int bouton1Val = 0;  //set variable bouton1Val
+int bouton2Val = 0;
+int btn2_num = 0;          //set variable btn2_num
+int boutton1 = 0;          //set variable o
+int boutonDroiteEtat = 0;  //set variable boutonDroiteEtat
+int boutonGaucheEtat = 0;
+String fans_char;      //string type variable fans_char
+int fans_val;          //set variable fans_char
 
 int pluieFlag = 0;  //set variable flag2
 int flag3;          //set variable flag3
@@ -72,9 +74,9 @@ const int fleurMax = 10;
 int humiditeFleur = 0;
 int fleurFlag = 0;
 
-//Oli 
+//Oli
 const int boutonGauchePin = 4;
-const int boutonDroitePin = 8;
+const int boutonDroitPin = 8;
 
 
 void setup() {
@@ -107,10 +109,10 @@ void setup() {
   pinMode(pluiePin, INPUT);    //set A3 to input
   pinMode(A2, INPUT);          //set A2 to input
 
-  pinMode(12, OUTPUT);                                 //set digital 12 to output
-  pinMode(5, OUTPUT);                                  //set digital 5 to output
-  pinMode(3, OUTPUT);                                  //set digital 3 to output
-  longueurDeLaToune = sizeof(tune) / sizeof(tune[0]);  //Avec valeur initiale
+  pinMode(12, OUTPUT);  //set digital 12 to output
+  pinMode(5, OUTPUT);   //set digital 5 to output
+  pinMode(3, OUTPUT);   //set digital 3 to output
+                        // longueurDeLaToune = sizeof(tune) / sizeof(tune[0]);  //Avec valeur initiale
 
   Serial.println(F("Maison Corrigée - V1.0 - Fin du Setup"));
 }
@@ -137,10 +139,10 @@ void loop() {
 
       break;                  //exit loop
     case 'e':                 //if val is character 'e'，program will circulate
-      music1();               //play birthday song
+      //music1();               //play birthday song
       break;                  //exit loop
     case 'f':                 //if val is character 'f'，program will circulate
-      music2();               //play ode to joy song
+      //music2();               //play ode to joy song
       break;                  //exit loop
     case 'g':                 //if val is character 'g'，program will circulate
       noTone(3);              //set digital 3 to stop playing music
@@ -275,7 +277,7 @@ void auto_sensor() {
 
 
   humiditeFleur = analogRead(fleurPin);  //assign the analog value of A2 to variable soil
-  if (humiditeFleur > fleurMin) // if variable soil is greater than 50
+  if (humiditeFleur > fleurMin)          // if variable soil is greater than 50
   {
     fleurFlag = 1;  //set flag3 to 1
     //If set flag3 to 1, program will circulate
@@ -291,29 +293,29 @@ void auto_sensor() {
       // delay(100);
       // noTone(tonePin);  //digital 3 stops playing sound
       // delay(300);
+      ;
     }
-    else if (humiditeFleur < fleurMax)  //If variable soil<10
-    {
-      fleurFlag = 0;  //set flag3 to 0
-    }
+  } else if (humiditeFleur < fleurMax)  //If variable soil<10
+  {
+    fleurFlag = 0;  //set flag3 to 0
+  }
 
-  } 
   door();  //run subroutine todo changer l'appel de la fonction
 }
 
 void door() {
-  boutonGaucheEtat = digitalRead(boutonGauchePin);        // assign the value of digital 4 to o
-  boutonDroiteEtat = digitalRead(boutonDroitePin);  //assign the value of digital 8 to boutonDroiteEtat
+  boutonGaucheEtat = digitalRead(boutonGauchePin);  // assign the value of digital 4 to o
+  boutonDroiteEtat = digitalRead(boutonDroitPin);  //assign the value of digital 8 to boutonDroiteEtat
 
   // # Gestion password # Á determiner
   if (boutonGaucheEtat == 0)  //if variableboutonGaucheEtat is 0
   {
-    delay(10);      //delay in 10ms
+    delay(10);                     //delay in 10ms
     while (boutonGaucheEtat == 0)  //if variableboutonGaucheEtat is 0，program will circulate
     {
-      boutonGaucheEtat = digitalRead(boutonGauchePin);           // assign the value of digital 4 to o
-      bouton1Val = bouton1Val + 1;  //variable bouton1Val plus 1
-      delay(100);                   // delay in 100ms
+      boutonGaucheEtat = digitalRead(boutonGauchePin);  // assign the value of digital 4 to o
+      bouton1Val = bouton1Val + 1;                      //variable bouton1Val plus 1
+      delay(100);                                       // delay in 100ms
     }
   }
   if (bouton1Val >= 1 && bouton1Val < 5)  //1≤if variablebtn1_num<5
@@ -323,7 +325,7 @@ void door() {
     passwd = String(passwd) + String(".");  //set passwd
     pass = String(pass) + String(".");      //set pass
     //LCD shows pass at the first row and column
-    mylcd.setCursor(0,1);
+    mylcd.setCursor(0, 1);
     mylcd.print(pass);
   }
   if (bouton1Val >= 5)
@@ -372,8 +374,8 @@ void door() {
       }
     }
   }
-  infrar = digitalRead(infraPin);  //assign the value of digital 2 to infrar
-  if (infrar == 0 && (val != 'l' && val != 't'))
+  infrarEtat = digitalRead(infraPin);  //assign the value of digital 2 to infrar
+  if (infrarEtat == 0 && (val != 'l' && val != 't'))
   //if variable infrar is 0 and val is not 'l' either 't'
   {
     servoFenetre.write(0);  //set servo connected to digital 9 to 0°
@@ -385,7 +387,7 @@ void door() {
     while (boutonDroiteEtat == 0)  //if variableboutonDroiteEtat is 0，program will circulate
     {
       boutonDroiteEtat = digitalRead(boutonDroitPin);  //assign the value of digital 8 to boutonDroiteEtat
-      btn2_num = btn2_num + 1;   //variable btn2_num plus 1
+      btn2_num = btn2_num + 1;                         //variable btn2_num plus 1
       delay(100);
       if (btn2_num >= 15)  //if variablebtn2_num ≥15
       {
@@ -404,26 +406,26 @@ void door() {
       }
     }
   }
-  // bouton1Val = 0;  //set bouton1Val to 0 
+  // bouton1Val = 0;  //set bouton1Val to 0
   // btn2_num = 0;    //set btn2_num to 0
 }
 
-// Birthday song
-void music1() {
-  birthday();
-}
-//Ode to joy
-void music2() {
-  Ode_to_Joy();
-}
-void Ode_to_Joy()  //play Ode to joy song
-{
-  for (int x = 0; x < longueurDeLaToune =0; //Avec valeur initiale x++) {
-    tone(tonePin
-  , tune[x]);
-    delay(300 * durt[x]);
-}
-}
+// // Birthday song
+// void music1() {
+//   birthday();
+// }
+// //Ode to joy
+// void music2() {
+//   Ode_to_Joy();
+// }
+// void Ode_to_Joy()  //play Ode to joy song
+// {
+//   for (int x = 0; x < longueurDeLaToune =0; //Avec valeur initiale x++) 
+//   {
+//     tone(tonePin, tune[x]);
+//     delay(300 * durt[x]);
+// }
+// }
 
 //PWM control
 void pwm_control() {
