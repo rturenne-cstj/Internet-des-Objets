@@ -1,0 +1,88 @@
+[
+    {
+        "id": "f090ada605a18ee7",
+        "type": "hue-light",
+        "z": "e871af7e630c148c",
+        "name": "Vidéo studio",
+        "bridge": "22333f13b7e77fda",
+        "lightid": "12",
+        "colornamer": true,
+        "skipevents": false,
+        "universalevents": false,
+        "x": 590,
+        "y": 340,
+        "wires": [
+            [
+                "747e6cb3eba4ced4"
+            ]
+        ]
+    },
+    {
+        "id": "41ace783101511bb",
+        "type": "inject",
+        "z": "e871af7e630c148c",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "false",
+        "payloadType": "bool",
+        "x": 280,
+        "y": 420,
+        "wires": [
+            [
+                "f090ada605a18ee7"
+            ]
+        ]
+    },
+    {
+        "id": "747e6cb3eba4ced4",
+        "type": "debug",
+        "z": "e871af7e630c148c",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "e9588267c19154b4",
+        "type": "hue-bridge-node",
+        "z": "e871af7e630c148c",
+        "name": "",
+        "bridge": "22333f13b7e77fda",
+        "autoupdates": true,
+        "skipglobalevents": false,
+        "x": 180,
+        "y": 300,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "22333f13b7e77fda",
+        "type": "hue-bridge",
+        "name": "Hue Bridge",
+        "bridge": "192.168.2.136",
+        "key": "-ONNzqKl3dA9GXSdB6clIuJcmNqmUViAKncGkUAx",
+        "interval": "3000",
+        "disableupdates": false
+    }
+]
