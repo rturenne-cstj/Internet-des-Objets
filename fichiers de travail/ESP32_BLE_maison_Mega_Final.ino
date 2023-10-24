@@ -21,12 +21,12 @@ std::string newValue;                           //utilisé pour le display OLED 
 
 // Le firmware du MH-10 défini les services et charactéristiques BLE
 // Le service REMOTE qui nous intéresse, unique dans notre environnement
-static BLEUUID serviceUUID("FF06");  //remplacer le UUID par FFXX où XX est le numéro du HM10
+static BLEUUID serviceUUID("FF99");  //remplacer le UUID par FFXX où XX est le numéro du HM10
 // La charactéristique REMOTE qui nous intéresse (NE PAS CHANGER)
 static BLEUUID charUUID("FFE1");  //NE PAS CHANGER
 // Notre HM-10 a un nom unique dans notre environnement
 // Ça sert à nous assurer que nous avons le bon HM-10
-std::string myDeviceName = "06-HM10-IDO";  //ÉCRIRE ICI le nom de votre HM-10, donc remplacer 00 par votre numéro
+std::string myDeviceName = "99-HM10-IDO";  //ÉCRIRE ICI le nom de votre HM-10, donc remplacer 00 par votre numéro
 
 static boolean doConnect = false;
 static boolean connected = false;
