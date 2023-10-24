@@ -11,13 +11,13 @@ char* displayMessage = "                    ";  //utilisé pour le display OLED 
 std::string newValue;                           //utilisé pour le display OLED du ESP32
 
 //Pour MQTT CHANGER===|   le 00 par votre numéro ***************
-const char* nomBLE = "06-ESP32";  //Votre identifiant UNIQUE correspond à votre numéro du HM-10 BLE et par conséquent votre ESP32
+const char* nomBLE = "99-ESP32";  //Votre identifiant UNIQUE correspond à votre numéro du HM-10 BLE et par conséquent votre ESP32
 String noderedPayload;
 bool noderedReceived = false;
 
 // Le firmware du MH-10 défini les services et charactéristiques BLE
 // Le service REMOTE qui nous intéresse, unique dans notre environnement
-static BLEUUID serviceUUID("FF06");  //remplacer le UUID par FFXX où XX est le numéro du HM10
+static BLEUUID serviceUUID("FF99");  //remplacer le UUID par FFXX où XX est le numéro du HM10
 // La charactéristique REMOTE qui nous intéresse (NE PAS CHANGER)
 static BLEUUID charUUID("FFE1");  //NE PAS CHANGER
 // Notre HM-10 a un nom unique dans notre environnement
@@ -33,9 +33,9 @@ static BLEAdvertisedDevice* myDevice;
 //Identification du serveur MQTT
 //Notre accès MQTT passe par le WIFI
 EspMQTTClient client(
-  "rtls",
-  "leborddulac",
-  "192.168.2.85",  // Adresse IP du serveur (broker) MQTT
+  "CSTJ-UBI-D139",
+  "$$12345678",
+  "192.168.138.xxx",  // Adresse IP du serveur (broker) MQTT
   //"MQTTUsername",   // Pas obligatoire
   //"MQTTPassword",   // Pas obligatoire
   nomBLE,  // Votre nom de client UNIQUE (voir ci-haut)
